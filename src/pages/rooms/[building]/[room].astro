@@ -1,0 +1,56 @@
+---
+import Table from "../../../components/Table.astro";
+
+type Room = {
+    Building: string;
+    Name: string;
+    RoomId: string;
+    Ds1: string;
+    Ds2: string;
+    Ds3: string;
+    Ds4: string;
+    Ds5: string;
+    Ds6: string;
+    Ds7: string;
+    Ds8: string;
+    Ds9: string;
+    Ds10: string;
+};
+
+export async function getStaticPaths() {
+    const BASE_URL = "http://localhost:8080";
+
+    async function fetchBuildings() {
+        const res = await fetch(BASE_URL + "/info");
+        const buildings: string[] = await res.json();
+        return buildings;
+    }
+
+    async function fetchRoomsForBuilding(building: string) {
+        const res = await fetch(BASE_URL + "/rooms/" + building);
+        const rooms: Room[] = await res.json();
+
+        return rooms;
+    }
+
+    const buildings = await fetchBuildings();
+
+    let allRooms: Room[] = [];
+    await Promise.all(
+        buildings.map(async (building) => {
+            const rooms = await fetchRoomsForBuilding(building);
+            allRooms.push(...rooms);
+        })
+    );
+
+    console.log(allRooms);
+    return allRooms.map((room) => ({
+        params: { building: room.Building, room: room.Name },
+        props: { room },
+    }));
+}
+
+const { room } = Astro.props;
+---
+
+<Table room={room} />
