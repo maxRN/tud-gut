@@ -1,24 +1,28 @@
 ---
-import Table from "../../components/Table.astro";
+import LecturePlan from "../../components/LecturePlan.astro";
+import RoomOccupation from "../../components/RoomOccupation.astro";
+import TableDayCard from "../../components/TableDayCard.astro";
+import Layout from "../../layouts/Layout.astro";
 
-type Room = {
+export type Room = {
     Building: string;
     Name: string;
     RoomId: string;
-    Ds1: string;
-    Ds2: string;
-    Ds3: string;
-    Ds4: string;
-    Ds5: string;
-    Ds6: string;
-    Ds7: string;
-    Ds8: string;
-    Ds9: string;
-    Ds10: string;
+    Ds1: string[];
+    Ds2: string[];
+    Ds3: string[];
+    Ds4: string[];
+    Ds5: string[];
+    Ds6: string[];
+    Ds7: string[];
+    Ds8: string[];
+    Ds9: string[];
+    Ds10: string[];
 };
 
 export async function getStaticPaths() {
     const BACKEND_URL = import.meta.env.BACKEND_URL;
+    console.log(BACKEND_URL);
 
     async function fetchBuildings() {
         const res = await fetch(BACKEND_URL + "/info");
@@ -43,14 +47,82 @@ export async function getStaticPaths() {
         })
     );
 
-    console.log(allRooms);
     return allRooms.map((room) => ({
         params: { building: room.Building, room: room.Name },
         props: { room },
     }));
 }
 
+interface Props {
+    room: Room;
+}
+
 const { room } = Astro.props;
 ---
 
-<Table room={room} />
+<Layout title={room.Building + " - " + room.Name}>
+    <main>
+        <h1>
+            <a href={"/" + room.Building}>{room.Building}</a> / <span
+                class="text-gradient">{room.Name}</span
+            >
+        </h1>
+        <ul role="list" class="link-card-grid">
+            <RoomOccupation
+                body="Raum ist frei bis 4. DS (13:00 Uhr) - 42 min."
+            />
+            <LecturePlan room={room} />
+        </ul>
+    </main>
+</Layout>
+
+<style>
+    a {
+        text-decoration: underline;
+    }
+    a:visited {
+        color: black;
+    }
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 60ch;
+    }
+    h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 0;
+    }
+    .text-gradient {
+        background-image: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 400%;
+        background-position: 0%;
+    }
+    .instructions {
+        line-height: 1.6;
+        margin: 1rem 0;
+        border: 1px solid rgba(var(--accent), 25%);
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.4rem;
+    }
+    .instructions code {
+        font-size: 0.875em;
+        font-weight: bold;
+        background: rgba(var(--accent), 12%);
+        color: rgb(var(--accent));
+        border-radius: 4px;
+        padding: 0.3em 0.45em;
+    }
+    .instructions strong {
+        color: rgb(var(--accent));
+    }
+    .link-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+        gap: 1rem;
+        padding: 0;
+    }
+</style>

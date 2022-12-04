@@ -1,0 +1,84 @@
+---
+import Layout from "../layouts/Layout.astro";
+import type { Room } from "./[building]/[room].astro";
+
+type BuildingWithRooms = {
+    building: string;
+    rooms: string[];
+};
+
+export async function getStaticPaths() {
+    const BACKEND_URL = import.meta.env.BACKEND_URL;
+
+    async function fetchBuildings() {
+        const res = await fetch(BACKEND_URL + "/info");
+        const buildings: string[] = await res.json();
+        return buildings;
+    }
+
+    async function fetchRoomsForBuilding(building: string) {
+        const res = await fetch(BACKEND_URL + "/rooms/" + building);
+        const rooms: Room[] = await res.json();
+
+        return rooms;
+    }
+
+    const buildings = await fetchBuildings();
+    console.log("buildings: ", buildings);
+
+    let allRooms: BuildingWithRooms[] = [];
+    await Promise.all(
+        buildings.map(async (building) => {
+            const rooms = await fetchRoomsForBuilding(building);
+            const newBuildingInfo: BuildingWithRooms = {
+                building: "test",
+                rooms: [],
+            };
+
+            newBuildingInfo.building = building;
+            rooms.forEach((room) => {
+                newBuildingInfo.rooms.push(room.Name);
+            });
+            allRooms.push(newBuildingInfo);
+        })
+    );
+
+    return allRooms.map((buildingWithInfo) => ({
+        params: { building: buildingWithInfo.building },
+        props: { buildingWithInfo: buildingWithInfo },
+    }));
+}
+
+interface Props {
+    buildingWithInfo: BuildingWithRooms;
+}
+
+const { buildingWithInfo } = Astro.props;
+---
+
+<Layout title={buildingWithInfo.building}>
+    <main>
+        <h1>{buildingWithInfo.building}</h1>
+        <ul>
+            {
+                buildingWithInfo.rooms.map((room) => (
+                    <a href={"/" + buildingWithInfo.building + "/" + room}>
+                        {room}
+                    </a>
+                ))
+            }
+        </ul>
+    </main>
+</Layout>
+
+<style>
+a {
+color: black;
+}
+a:visited {
+    color: black;
+}
+ul {
+    color: black;
+}
+</style>

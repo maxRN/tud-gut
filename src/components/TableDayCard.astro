@@ -1,0 +1,76 @@
+---
+export interface Props {
+    title: string;
+    lectures: string[];
+}
+
+const { title, lectures } = Astro.props;
+---
+
+<li class="lecture-plan-day-card">
+    <span>
+        <h2>
+            {title}
+        </h2>
+        <div class="container">
+            {
+                lectures.map((lecture, index) => (
+                    <>
+                        <div class="item first-col">DS {index + 1}</div>
+                        <div class="item sec-col">{lecture}</div>
+                    </>
+                ))
+            }
+        </div>
+    </span>
+</li>
+<style>
+    .lecture-plan-day-card {
+        list-style: none;
+        display: flex;
+        padding: 0.15rem;
+        background-color: white;
+        background-image: var(--accent-gradient);
+        background-size: 400%;
+        border-radius: 0.5rem;
+        background-position: 100%;
+        transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    }
+
+    .lecture-plan-day-card > span {
+        width: 100%;
+        text-decoration: none;
+        line-height: 1.4;
+        padding: 1rem 1.3rem;
+        border-radius: 0.35rem;
+        color: #111;
+        background-color: white;
+        opacity: 0.8;
+    }
+    h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    p {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+        color: #444;
+    }
+    .lecture-plan-day-card:is(:hover, :focus-within) {
+        background-position: 0;
+    }
+    .lecture-plan-day-card:is(:hover, :focus-within) h2 {
+        color: rgb(var(--accent));
+    }
+    .container {
+        display: grid;
+        gap: 10px;
+        margin-top: 1em;
+    }
+    .sec-col {
+        grid-column: 2;
+    }
+</style>

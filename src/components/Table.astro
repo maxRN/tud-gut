@@ -1,94 +1,87 @@
 ---
-function random() {
-    return "hello";
+/* import type { Room } from "../pages/[building]/[room].astro"; */
+
+interface Props {
+    room: Room;
 }
-const test = random();
 const { room } = Astro.props;
-const properRoom = {
-    Ds1: room.Ds1.split("|"),
-    Ds2: room.Ds2.split("|"),
-    Ds3: room.Ds3.split("|"),
-    Ds4: room.Ds4.split("|"),
-    Ds5: room.Ds5.split("|"),
-    Ds6: room.Ds6.split("|"),
-    Ds7: room.Ds7.split("|"),
-    Ds8: room.Ds8.split("|"),
-    Ds9: room.Ds9.split("|"),
-    Ds10: room.Ds10.split("|"),
-};
 ---
 
 <style>
     table {
         background-color: red;
-        overflow-x: scroll;
+        overflow: auto;
+        height: 100vh;
+    }
+
+    #current-status {
+        background: blue;
     }
 </style>
 
-<script> 
-
-// highlight current day/time slot
-// put banner at the top whether room currently free
-
-</script>
+<div id="current-status"></div>
 
 <table>
-    <tr>
-        <td>Time Slot</td>
-        <td>Monday</td>
-        <td>Tuesday</td>
-        <td>Wednesday</td>
-        <td>Thursday</td>
-        <td>Friday</td>
-    </tr>
-    <tr
-        ><td>DS 1</td>{
-            properRoom.Ds1.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 2</td>{
-            properRoom.Ds2.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 3</td>{
-            properRoom.Ds3.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 4</td>{
-            properRoom.Ds4.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 5</td>{
-            properRoom.Ds5.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 6</td>{
-            properRoom.Ds6.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 7</td>{
-            properRoom.Ds7.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 8</td>{
-            properRoom.Ds8.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 9</td>{
-            properRoom.Ds9.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
-    <tr
-        ><td>DS 10</td>{
-            properRoom.Ds10.map((lecture: string) => <td>{lecture}</td>)
-        }</tr
-    >
+    <thead>
+        <tr>
+            <th>Time Slot</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            ><th>DS 1</th>{
+                room.Ds1.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><th>DS 2</th>{
+                room.Ds2.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><th>DS 3</th>{
+                room.Ds3.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><th>DS 4</th>{
+                room.Ds4.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><th>DS 5</th>{
+                room.Ds5.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><th>DS 6</th>{
+                room.Ds6.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><th>DS 7</th>{
+                room.Ds7.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><th>DS 8</th>{
+                room.Ds8.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><th>DS 9</th>{
+                room.Ds9.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+        <tr
+            ><td>DS 10</td>{
+                room.Ds10.map((lecture: string) => <td>{lecture}</td>)
+            }</tr
+        >
+    </tbody>
 </table>

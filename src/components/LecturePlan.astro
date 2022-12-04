@@ -1,0 +1,69 @@
+---
+import type { Room } from "../pages/[building]/[room].astro";
+import TableDayCard from "./TableDayCard.astro";
+
+interface Props {
+    room: Room;
+}
+
+type Week = {
+    monday: string[];
+    tuesday: string[];
+    wednesday: string[];
+    thursday: string[];
+    friday: string[];
+};
+
+let myWeek: Week = {
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+};
+
+function getDaysFromRoom(roomie: Room) {
+    type ObjectKey =
+        | "Ds1"
+        | "Ds2"
+        | "Ds3"
+        | "Ds4"
+        | "Ds5"
+        | "Ds6"
+        | "Ds7"
+        | "Ds8"
+        | "Ds9"
+        | "Ds10";
+
+    for (let i = 1; i < 8; i++) {
+        const dsString = ("Ds" + i.toString()) as ObjectKey;
+        const ds: string[] = roomie[dsString];
+
+        myWeek.monday.push(ds[0]);
+        myWeek.tuesday.push(ds[1]);
+        myWeek.wednesday.push(ds[2]);
+        myWeek.thursday.push(ds[3]);
+        myWeek.friday.push(ds[4]);
+    }
+}
+
+const { room } = Astro.props;
+getDaysFromRoom(room);
+---
+
+<ul role="list" class="link-card-grid">
+    <TableDayCard title="Montag" lectures={myWeek.monday} />
+    <TableDayCard title="Dienstag" lectures={myWeek.tuesday} />
+    <TableDayCard title="Mittwoch" lectures={myWeek.wednesday} />
+    <TableDayCard title="Donnerstag" lectures={myWeek.thursday} />
+    <TableDayCard title="Freitag" lectures={myWeek.friday} />
+</ul>
+
+<style>
+    .link-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+        gap: 1rem;
+        padding: 0;
+    }
+</style>
