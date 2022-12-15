@@ -1,25 +1,26 @@
 ---
-import { getCurrentDs } from "../timeAndDate";
-
+import type { Room } from "../timeAndDate";
 export interface Props {
-    body: string;
+    room: Room;
 }
-
-const currentDs = getCurrentDs(new Date());
-
-const { body } = Astro.props;
+const { room } = Astro.props;
 ---
 
-<li class="occupation-card">
+<li class="room-card">
     <span>
-        <h2 id="room-status-current">{currentDs}</h2>
-        <p>
-            {body}
-        </p>
+        <a href={"/" + room.Building + "/" + room.Name}>
+            <h2>
+                {room.Name}
+            </h2>
+        </a>
+        <!-- <div class="container"> -->
+        <!--     <div class="item first-col">DS {index + 1}</div> -->
+        <!--     <div class="item sec-col">{lecture}</div> -->
+        <!-- </div> -->
     </span>
 </li>
 <style>
-    .occupation-card {
+    .room-card {
         list-style: none;
         display: flex;
         padding: 0.15rem;
@@ -29,11 +30,12 @@ const { body } = Astro.props;
         border-radius: 0.5rem;
         background-position: 100%;
         transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        margin-top: 1em;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
             0 2px 4px -2px rgba(0, 0, 0, 0.1);
     }
 
-    .occupation-card > span {
+    .room-card > span {
         width: 100%;
         text-decoration: none;
         line-height: 1.4;
@@ -53,10 +55,25 @@ const { body } = Astro.props;
         margin-bottom: 0;
         color: #444;
     }
-    .occupation-card:is(:hover, :focus-within) {
+    .room-card:is(:hover, :focus-within) {
         background-position: 0;
     }
-    .occupation-card:is(:hover, :focus-within) h2 {
+    .room-card:is(:hover, :focus-within) h2 {
         color: rgb(var(--accent));
+    }
+    .container {
+        display: grid;
+        gap: 10px;
+        margin-top: 1em;
+    }
+    .sec-col {
+        grid-column: 2;
+    }
+    a {
+        text-decoration: underline;
+        color: black;
+    }
+    a:visited {
+        color: black;
     }
 </style>

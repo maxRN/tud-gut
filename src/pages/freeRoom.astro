@@ -1,0 +1,59 @@
+---
+import { getCurrentDs } from "../timeAndDate";
+import type { Room } from "../timeAndDate";
+import RoomCard from "../components/RoomCard.astro";
+import Layout from "../layouts/Layout.astro";
+
+const currentDs = getCurrentDs(new Date());
+
+const BACKEND_URL = import.meta.env.BACKEND_URL;
+async function fetchFreeRooms(currentDs: number) {
+    const url = new URL("/freeRoom", BACKEND_URL);
+    url.searchParams.append("building", "APB");
+    url.searchParams.append("period", currentDs.toString());
+
+    const res = await fetch(url.href);
+    const rooms: Room[] = await res.json();
+    return rooms;
+}
+
+const freeRooms = await fetchFreeRooms(currentDs);
+---
+
+<Layout title="Leere Räume">
+    <main>
+        <h1>
+            <a href={"/"}>Home</a> / <span class="text-gradient"
+                >Leere Räume</span
+            >
+        </h1>
+        {freeRooms.map((room: Room) => <RoomCard room={room} />)}
+    </main>
+</Layout>
+
+<style>
+    .text-gradient {
+        background-image: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 400%;
+        background-position: 0%;
+    }
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 60ch;
+    }
+    h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 0;
+    }
+    a {
+        text-decoration: underline;
+        color: black;
+    }
+    a:visited {
+        color: black;
+    }
+</style>

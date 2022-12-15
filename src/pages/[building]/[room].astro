@@ -1,24 +1,8 @@
 ---
 import LecturePlan from "../../components/LecturePlan.astro";
 import RoomOccupation from "../../components/RoomOccupation.astro";
-import TableDayCard from "../../components/TableDayCard.astro";
 import Layout from "../../layouts/Layout.astro";
-
-export type Room = {
-    Building: string;
-    Name: string;
-    RoomId: string;
-    Ds1: string[];
-    Ds2: string[];
-    Ds3: string[];
-    Ds4: string[];
-    Ds5: string[];
-    Ds6: string[];
-    Ds7: string[];
-    Ds8: string[];
-    Ds9: string[];
-    Ds10: string[];
-};
+import type { Room } from "../../timeAndDate";
 
 export async function getStaticPaths() {
     const BACKEND_URL = import.meta.env.BACKEND_URL;

@@ -1,4 +1,5 @@
 ---
+import RoomCard from "../components/RoomCard.astro";
 import Layout from "../layouts/Layout.astro";
 import type { Room } from "./[building]/[room].astro";
 
@@ -11,6 +12,7 @@ export async function getStaticPaths() {
     const BACKEND_URL = import.meta.env.BACKEND_URL;
 
     async function fetchBuildings() {
+        console.log(BACKEND_URL + "/info");
         const res = await fetch(BACKEND_URL + "/info");
         const buildings: string[] = await res.json();
         return buildings;
@@ -58,27 +60,55 @@ const { buildingWithInfo } = Astro.props;
 
 <Layout title={buildingWithInfo.building}>
     <main>
-        <h1>{buildingWithInfo.building}</h1>
-        <ul>
-            {
-                buildingWithInfo.rooms.map((room) => (
-                    <a href={"/" + buildingWithInfo.building + "/" + room}>
-                        {room}
-                    </a>
-                ))
-            }
-        </ul>
+        <h1>
+            <a href={"/"}>Home</a> / <span class="text-gradient"
+                >{buildingWithInfo.building}</span
+            >
+        </h1>
+        {
+            buildingWithInfo.rooms.map((name) => {
+                const room: Room = {
+                    Name: name,
+                    Building: buildingWithInfo.building,
+                };
+                return <RoomCard room={room} />;
+            })
+        }
     </main>
 </Layout>
 
 <style>
-a {
-color: black;
-}
-a:visited {
-    color: black;
-}
-ul {
-    color: black;
-}
+    a {
+        color: black;
+    }
+    a:visited {
+        color: black;
+    }
+    ul {
+        color: black;
+    }
+    .text-gradient {
+        background-image: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 400%;
+        background-position: 0%;
+    }
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 60ch;
+    }
+    h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin: 0;
+    }
+    a {
+        text-decoration: underline;
+        color: black;
+    }
+    a:visited {
+        color: black;
+    }
 </style>
