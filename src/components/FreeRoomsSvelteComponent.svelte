@@ -22,11 +22,12 @@
 </script>
 
 {#await freeRooms}
-    <p>still loading free rooms...</p>
 {:then rooms}
     {#each rooms as room}
         <RoomCard {room} />
     {:else}
         <div>No Free Rooms Available!</div>
     {/each}
+{:catch error}
+    <div>Error during loading: {error}</div>
 {/await}
