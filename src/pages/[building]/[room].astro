@@ -1,6 +1,6 @@
 ---
 import LecturePlan from "../../components/LecturePlan.astro";
-import RoomOccupation from "../../components/RoomOccupation.astro";
+import RoomOccupation from "../../components/RoomOccupation.svelte";
 import Layout from "../../layouts/Layout.astro";
 import type { Room } from "../../timeAndDate";
 
@@ -53,6 +53,7 @@ const { room } = Astro.props;
         </h1>
         <ul role="list" class="link-card-grid">
             <RoomOccupation
+                client:load
                 body="Raum ist frei bis 4. DS (13:00 Uhr) - 42 min."
             />
             <LecturePlan room={room} />

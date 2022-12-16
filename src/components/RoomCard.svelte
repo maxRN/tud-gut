@@ -1,24 +1,18 @@
----
-import type { Room } from "../timeAndDate";
-export interface Props {
-    room: Room;
-}
-const { room } = Astro.props;
----
+<script lang="ts">
+    import type { Room } from "../timeAndDate";
+    export let room: Room;
+</script>
 
-<li class="room-card">
+<div class="room-card">
     <span>
         <a href={"/" + room.Building + "/" + room.Name}>
             <h2>
                 {room.Name}
             </h2>
         </a>
-        <!-- <div class="container"> -->
-        <!--     <div class="item first-col">DS {index + 1}</div> -->
-        <!--     <div class="item sec-col">{lecture}</div> -->
-        <!-- </div> -->
     </span>
-</li>
+</div>
+
 <style>
     .room-card {
         list-style: none;
@@ -50,24 +44,11 @@ const { room } = Astro.props;
         font-size: 1.25rem;
         transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    p {
-        margin-top: 0.5rem;
-        margin-bottom: 0;
-        color: #444;
-    }
     .room-card:is(:hover, :focus-within) {
         background-position: 0;
     }
     .room-card:is(:hover, :focus-within) h2 {
         color: rgb(var(--accent));
-    }
-    .container {
-        display: grid;
-        gap: 10px;
-        margin-top: 1em;
-    }
-    .sec-col {
-        grid-column: 2;
     }
     a {
         text-decoration: underline;

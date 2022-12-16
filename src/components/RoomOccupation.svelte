@@ -1,23 +1,20 @@
----
-import { getCurrentDs } from "../timeAndDate";
+<script lang="ts">
+    import { getCurrentDs } from "../timeAndDate";
 
-export interface Props {
-    body: string;
-}
+    export let body: string;
 
-const currentDs = getCurrentDs(new Date());
+    const currentDs = getCurrentDs(new Date());
+</script>
 
-const { body } = Astro.props;
----
-
-<li class="occupation-card">
+<div class="occupation-card">
     <span>
         <h2 id="room-status-current">{currentDs}</h2>
         <p>
             {body}
         </p>
     </span>
-</li>
+</div>
+
 <style>
     .occupation-card {
         list-style: none;
