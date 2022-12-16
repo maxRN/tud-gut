@@ -31,7 +31,7 @@ function isDuringDs(ds: DS, date: Date) {
   }
 }
 export function getCurrentDs(date: Date) {
-  let getCurrentDs = 1;
+  let getCurrentDs = "";
   // find current DS
   if (isDuringDs(1, date)) {
     getCurrentDs = 1;
