@@ -16,6 +16,45 @@ export type Room = {
 
 type DS = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
+export function getLecturesForPeriod(room: Room, ds: number) {
+    switch (ds) {
+        case 1:
+            return room.Ds1;
+            break;
+        case 2:
+            return room.Ds2;
+            break;
+        case 3:
+            return room.Ds3;
+            break;
+        case 4:
+            return room.Ds4;
+            break;
+        case 5:
+            return room.Ds5;
+            break;
+        case 6:
+            return room.Ds6;
+            break;
+        case 7:
+            return room.Ds7;
+            break;
+        case 8:
+            return room.Ds8;
+            break;
+        case 9:
+            return room.Ds9;
+            break;
+        case 10:
+            return room.Ds10;
+            break;
+            
+        default:
+        return []
+            break;
+    }
+}
+
 function isDuringDs(ds: DS, date: Date) {
   const dsBegin = new Date(date.getTime());
   dsBegin.setHours(7, 10);

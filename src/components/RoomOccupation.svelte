@@ -1,17 +1,30 @@
 <script lang="ts">
-    import { getCurrentDs } from "../timeAndDate";
+    import { getCurrentDs, getLecturesForPeriod, Room } from "../timeAndDate";
 
-    export let body: string;
+    export let room: Room;
 
-    const currentDs = getCurrentDs(new Date());
+    // TODO maybe this should be an API?
+    function freeUntil(lectures: string[], dsStart: number) {}
+
+    const currentDs = parseInt(getCurrentDs(new Date()));
+    const weekday = new Date().getDay();
+
+    const currentLecture = getLecturesForPeriod(room, currentDs)[weekday - 1];
+
+    const roomFree = weekday == 0 || weekday == 6 || currentLecture === "";
 </script>
 
 <div class="occupation-card">
     <span>
-        <h2 id="room-status-current">{currentDs}</h2>
-        <p>
-            {body}
-        </p>
+        {#if roomFree}
+            <h2 id="room-status-current">
+                Room is <span class="room-free">free!</span>
+            </h2>
+        {:else}
+            <h2 id="room-status-current">
+                Room is <span class="occupied">occupied!</span>
+            </h2>
+        {/if}
     </span>
 </div>
 
@@ -55,5 +68,11 @@
     }
     .occupation-card:is(:hover, :focus-within) h2 {
         color: rgb(var(--accent));
+    }
+    .occupied {
+        color: red;
+    }
+    .room-free {
+        color: green;
     }
 </style>

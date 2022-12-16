@@ -54,7 +54,7 @@ const { room } = Astro.props;
         <ul role="list" class="link-card-grid">
             <RoomOccupation
                 client:load
-                body="Raum ist frei bis 4. DS (13:00 Uhr) - 42 min."
+                room={room}
             />
             <LecturePlan room={room} />
         </ul>
