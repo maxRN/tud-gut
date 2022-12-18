@@ -22,6 +22,7 @@
 </script>
 
 {#await freeRooms}
+    <div class="spacer" />
 {:then rooms}
     {#each rooms as room}
         <RoomCard {room} />
@@ -31,3 +32,9 @@
 {:catch error}
     <div>Error during loading: {error}</div>
 {/await}
+
+<style>
+    .spacer {
+        min-height: 120vh;
+    }
+</style>

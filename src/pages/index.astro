@@ -3,27 +3,28 @@ import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Das TUd Gut!">
     <main>
         <h1>Willkommen bei <span class="text-gradient">TUd Gut!</span></h1>
-        <ul role="list" class="link-card-grid">
-            <Card
-                href="/APB"
-                title="APB"
-                body="Stundeplan aller Räume des APB"
-            />
-            <Card
-                href="/freeRoom"
-                title="Freie Räume"
-                body="Sieh dir alle freien Räume an"
-            />
-        </ul>
+        <div class="spacer">
+            <ul role="list" class="link-card-grid">
+                <Card
+                    href="/APB"
+                    title="APB"
+                    body="Stundeplan aller Räume des APB"
+                />
+                <Card
+                    href="/freeRoom"
+                    title="Freie Räume"
+                    body="Sieh dir alle freien Räume an"
+                />
+            </ul>
+        </div>
     </main>
 </Layout>
 
 <style>
     main {
-        margin: auto;
         padding: 1.5rem;
         max-width: 60ch;
     }
@@ -31,6 +32,11 @@ import Card from "../components/Card.astro";
         font-size: 3rem;
         font-weight: 800;
         margin: 0;
+    }
+    footer {
+        display: none;
+    }
+    ul {
     }
     .text-gradient {
         background-image: var(--accent-gradient);
@@ -58,10 +64,15 @@ import Card from "../components/Card.astro";
     .instructions strong {
         color: rgb(var(--accent));
     }
+    .spacer {
+        min-height: 60vh;
+    }
+
     .link-card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-        gap: 1rem;
+        gap: 1em;
         padding: 0;
+        align-items: flex-start;
     }
 </style>
