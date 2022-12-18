@@ -2,13 +2,27 @@
 const twitter = "test";
 ---
 
-<footer>Made with love. Consider contributing here.</footer>
+<footer>
+    Made with
+    <img src="/heart_icon.png" alt="Pixel heart icon." />
+    //
+    <span>Consider contributing <a href="http://github.com/maxRN/tud-gut">here</a>.</span>
+</footer>
 
 <style>
     footer {
-        background-color: rgb(51 65 85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 1em;
+        gap: 0.5em;
+
+        background-color: rgb(51 65 85);
         text-align: center;
+        color: white;
+    }
+    a:visited,
+    a {
         color: white;
     }
 </style>
