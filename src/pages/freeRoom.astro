@@ -1,19 +1,33 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import FreeRoomsSvelteComponent from "../components/FreeRoomsSvelteComponent.svelte";
-
+import { getCurrentDs } from "../timeAndDate";
+import type { Room } from "../timeAndDate";
+import RoomCard from "../components/RoomCard.svelte";
 const BACKEND_URL = import.meta.env.BACKEND_URL;
+
+const currentDs = getCurrentDs(new Date());
+
+async function fetchFreeRooms(currentDs: number) {
+    const url = new URL("/freeRoom", BACKEND_URL);
+    url.searchParams.append("building", "APB");
+    url.searchParams.append("period", currentDs.toString());
+
+    const res = await fetch(url.href);
+    const rooms: Room[] = await res.json();
+    return rooms;
+}
+
+const freeRooms = await fetchFreeRooms(currentDs);
 ---
 
-<!-- TODO make this a SSR rendered site so we don't need client-side javascript anymore  -->
 <Layout title="Leere Räume">
     <main>
         <h1>
             <a href={"/"}>Home</a> / <span class="text-gradient"
-                >Leere Räume</span
+                ><br>Leere Räume</span
             >
         </h1>
-        <FreeRoomsSvelteComponent client:load backendURL={BACKEND_URL} />
+        {freeRooms.map((room) => <RoomCard {room} />)}
     </main>
 </Layout>
 
